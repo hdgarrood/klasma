@@ -14,6 +14,7 @@ Note that (for now, at least) any part of this could change at any time.
 
 * Looks fairly easy; just need to generate a stream of byte arrays.
 * Eg: http://jsresources.org/examples/OscillatorPlayer.html
+* Worth a read: http://docs.oracle.com/javase/tutorial/sound/sampled-overview.html
 
 ## WAV format
 
