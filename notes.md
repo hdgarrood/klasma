@@ -27,6 +27,8 @@ Note that (for now, at least) any part of this could change at any time.
 
 ### NoteName
 
+Recommended reading: [wikipedia: Scientific pitch notation]
+
 Note: The class NoteName should contain one instance for each NoteName in the set above, and it should be possible to refer to them with, eg, `NoteName.C`. I expect sharp symbols aren't allowed, so a sharp should become, eg, `NoteName.CSharp`, and therefore, flats should be, eg, `NoteName.BFlat`
 
 #### static NoteName parse(String str)
@@ -37,11 +39,12 @@ Try to parse a NoteName from a String, returning null if the parse failed. Examp
     NoteName.parse("lol") // => null
 
 #### int toInt()
-Converts the NoteName to an Integer, giving its position in the scale. Examples:
+Converts the NoteName to an Integer, giving its position in the scale. Using [wikipedia: Scientific pitch notation] as  the basis, we use 1 for C, 2 for C#, etc. up to 12 for B. This should always return an integer in the range [1, 12]. Examples:
 
-    NoteName.A.toInt()      // => 1
-    NoteName.ASharp.toInt() // => 2
-    NoteName.BFlat.toInt()  // => 2
-    NoteName.B.toInt()      // => 3
-    NoteName.GSharp.toInt() // => 12
+    NoteName.C.toInt()      // => 1
+    NoteName.CSharp.toInt() // => 2
+    NoteName.DFlat.toInt()  // => 2
+    NoteName.D.toInt()      // => 3
+    NoteName.B.toInt()      // => 12
 
+[wikipedia: Scientific pitch notation]: https://en.wikipedia.org/wiki/Scientific_pitch_notation
