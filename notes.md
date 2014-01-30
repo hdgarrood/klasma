@@ -55,6 +55,16 @@ Converts the NoteName to an Integer, giving its position in the scale. Using [wi
 
 Creates a Channel with the given Waveform and Note array.
 
-#### byte amplitudeAt(double sampleRate, int n)
+#### byte amplitudeAt(double noteLengthMs, double ms)
 
-If the sample rate is given by `sampleRate`, get the amplitude of the nth sample (0-based).
+If a whole note is `noteLengthMs` milliseconds long, then return the amplitude at `ms` milliseconds into the channel (0-based).
+
+### Track
+
+#### (constructor) Track(Channel[] channels, double tempo, double sampleRate)
+
+Creates a Track with the given channels, tempo, and sample rate.
+
+#### byte getSample(int n)
+
+Get the amplitude of the nth sample (0-based).
