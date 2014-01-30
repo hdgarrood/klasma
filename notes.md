@@ -8,7 +8,7 @@ Note that (for now, at least) any part of this could change at any time.
 * a **Note** consists of a NoteValue and possibly also a Pitch (the absence of a Pitch implies that it is a rest)
 * a **Waveform** is like a blueprint of the shape of a wave. It should be possible to create a wave of any frequency and amplitude by scaling a Waveform. Currently the plan is to implement this as a function mapping time (over one single period) to amplitude, that is, [0, 1] -> [-1, 1]
 * a **Channel** is a Waveform and an ordered list of Notes. To play a Channel, play each of the Notes in order (a Note can only be started after the previous one has finished) using the Channel's Waveform.
-* a **Track** is one or more Channels, which should be played concurrently, together with a tempo (which is specified crotchets/minute).
+* a **Track** is one or more Channels, which should be played concurrently, together with a tempo (which is specified in  crotchets/minute).
 
 ## Javax Sound API research
 
