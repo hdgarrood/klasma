@@ -22,3 +22,26 @@ Note that (for now, at least) any part of this could change at any time.
   multiple outputs; that is, playing directly, or generating WAV data, or
   generating MP3 data, or anything. That probably means that the WAV generation
   has already been done for us.
+
+## Individual object APIs
+
+### NoteName
+
+Note: The class NoteName should contain one instance for each NoteName in the set above, and it should be possible to refer to them with, eg, `NoteName.C`. I expect sharp symbols aren't allowed, so a sharp should become, eg, `NoteName.CSharp`, and therefore, flats should be, eg, `NoteName.BFlat`
+
+#### static NoteName parse(String str)
+Try to parse a NoteName from a String, returning null if the parse failed. Examples:
+
+    NoteName.parse("C")   // => NoteName.C
+    NoteName.parse("A#")  // => NoteName.ASharp
+    NoteName.parse("lol") // => null
+
+#### int toInt()
+Converts the NoteName to an Integer, giving its position in the scale. Examples:
+
+    NoteName.A.toInt()      // => 1
+    NoteName.ASharp.toInt() // => 2
+    NoteName.BFlat.toInt()  // => 2
+    NoteName.B.toInt()      // => 3
+    NoteName.GSharp.toInt() // => 12
+
