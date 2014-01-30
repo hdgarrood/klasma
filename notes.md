@@ -39,13 +39,13 @@ Try to parse a NoteName from a String, returning null if the parse failed. Examp
     NoteName.parse("lol") // => null
 
 #### int toInt()
-Converts the NoteName to an Integer, giving its position in the scale. Using [wikipedia: Scientific pitch notation] as  the basis, we use 1 for C, 2 for C#, etc. up to 12 for B. This should always return an integer in the range [1, 12]. Examples:
+Converts the NoteName to an Integer, giving its position in the scale. Using [wikipedia: Scientific pitch notation] as  the basis, we use 0 for C, 1 for C#, etc. up to 11 for B. This should always return an integer in the range [0, 11]. Examples:
 
-    NoteName.C.toInt()      // => 1
-    NoteName.CSharp.toInt() // => 2
-    NoteName.DFlat.toInt()  // => 2
-    NoteName.D.toInt()      // => 3
-    NoteName.B.toInt()      // => 12
+    NoteName.C.toInt()      // => 0
+    NoteName.CSharp.toInt() // => 1
+    NoteName.DFlat.toInt()  // => 1
+    NoteName.D.toInt()      // => 2
+    NoteName.B.toInt()      // => 11
 
 [wikipedia: Scientific pitch notation]: https://en.wikipedia.org/wiki/Scientific_pitch_notation
 
@@ -55,4 +55,6 @@ Converts the NoteName to an Integer, giving its position in the scale. Using [wi
 
 Creates a Channel with the given Waveform and Note array.
 
-#### getAmplitudeAt(double sampleRate, int sample)
+#### byte amplitudeAt(double sampleRate, int n)
+
+If the sample rate is given by `sampleRate`, get the amplitude of the nth sample (0-based).
