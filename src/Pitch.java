@@ -18,6 +18,9 @@ public class Pitch {
                     "octave must be within the range: %d..%d",
                     OCTAVE_MIN, OCTAVE_MAX));
 
+        if (noteName == null)
+            throw new IllegalArgumentException("noteName may not be null");
+
         this.noteName = noteName;
         this.octave   = octave;
     }
