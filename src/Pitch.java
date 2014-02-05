@@ -33,6 +33,6 @@ public class Pitch {
 
     public double frequency() {
         return C0_FREQUENCY *
-        		Math.pow(SEMITONE_RATIO, (double)semitonesAboveC0());
+                Math.pow(SEMITONE_RATIO, (double)semitonesAboveC0());
     }
 }
