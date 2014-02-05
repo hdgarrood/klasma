@@ -1,5 +1,5 @@
 public class Main {
 	public static void main(String[] args) {
-		System.out.println(NoteName.C.toInt());
+		System.out.println(NoteValue.Quaver.dotted().length());
 	}
 }
