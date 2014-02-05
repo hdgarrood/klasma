@@ -1,5 +1,5 @@
 public class Main {
-	public static void main(String[] args) {
-		System.out.println(NoteValue.Quaver.dotted().length());
-	}
+    public static void main(String[] args) {
+        System.out.println(new Pitch(NoteName.A, 5).frequency());
+    }
 }
