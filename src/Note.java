@@ -1,13 +1,13 @@
 public class Note {
-    private NoteValue noteValue;
+    private NoteValue value;
     private Pitch pitch;
 
-    public Note(NoteValue noteValue, Pitch pitch) {
-        if (noteValue == null)
-            throw new IllegalArgumentException("noteValue may not be null");
+    public Note(NoteValue value, Pitch pitch) {
+        if (value == null)
+            throw new IllegalArgumentException("value may not be null");
 
-        this.noteValue = noteValue;
-        this.pitch     = pitch;
+        this.value = value;
+        this.pitch = pitch;
     }
 
     public boolean isRest() {
@@ -18,7 +18,13 @@ public class Note {
         return this.pitch;
     }
 
-    public NoteValue noteValue() {
-        return this.noteValue;
+    public NoteValue value() {
+        return this.value;
+    }
+    
+    public double at(double t, Waveform w) {
+        double freq = pitch().frequency();
+        
+        
     }
 }
