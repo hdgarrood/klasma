@@ -7,11 +7,15 @@ public class ChannelReader {
     // How long has the current note been playing for (sec)?
     private double currentNotePlayTime;
     
+    // The length of the current note (sec)
+    private double currentNoteLength;
+    
     // Tempo (semibreves / sec)
     private double tempo;
     
     // Sample rate (samples / sec)
     private double sampleRate;
+    
     
     public ChannelReader(Channel channel, double tempo, double sampleRate) {
         if (channel == null)
@@ -25,6 +29,28 @@ public class ChannelReader {
     }
     
     public double getNext() {
-        return 0;
+        advance();
+    }
+    
+    private void advance() {
+        double newPlayTime = this.currentNotePlayTime + this.sampleRate;
+        
+        if (this.currentNoteLength > newPlayTime) {
+            this.currentNotePlayTime = newPlayTime;
+        } else {
+            moveToNextNote();
+        }
+    }
+
+    private void moveToNextNote() {
+        this.currentNotePlayTime =
+                this.currentNoteLength - this.currentNotePlayTime;
+        this.currentNoteIndex++;
+        this.currentNoteLength =
+                getCurrentNote().value().length() * this.tempo;
+    }
+    
+    private Note getCurrentNote() {
+        return this.channel.notes()[this.currentNoteIndex];
     }
 }

@@ -13,6 +13,10 @@ public class Channel {
         this.notes = notes;
     }
     
+    public Note[] notes() {
+        return notes;
+    }
+    
     // Return the note at a specific relative time (ie 1 = a semibreve)
     // together with the amount of relative time that note has been playing
     private Pair<Note, Double> getNoteAt(double t) {
