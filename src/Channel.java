@@ -14,7 +14,7 @@ public class Channel {
     }
     
     // Return the note at a specific relative time (ie 1 = a semibreve)
-    // together with the 
+    // together with the amount of relative time that note has been playing
     private Pair<Note, Double> getNoteAt(double t) {
         Consumer<Note> c = new Consumer<Note>(this.notes);
         
@@ -27,11 +27,16 @@ public class Channel {
                 t -= note.value().length();
             }
         }
-        return null;
+        
+        throw new IllegalArgumentException("t too large: no more notes");
     }
 
-    public double at(double t) {
+    // Given a tempo (semibreves / second) and a time (seconds) return a
+    // sample of the amplitude at that time.
+    public double amplitudeAt(double sec, double tempo) {
+        double t = sec * tempo;
+        
         Pair<Note, Double> p = getNoteAt(t);
-        return p.fst().at(t, this.waveform);
+        return p.fst().at(p.snd() / tempo, this.waveform);
     }
 }
