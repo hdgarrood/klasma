@@ -1,7 +1,7 @@
-public class Noise implements Waveform {
+public class Noise extends Waveform {
     public Noise() { }
 
-    public double at(double t) {
+    protected double _at(double t) {
         return (2 * Math.random()) - 1;
     }
 }

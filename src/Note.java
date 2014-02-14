@@ -21,15 +21,4 @@ public class Note {
     public NoteValue value() {
         return this.value;
     }
-    
-    // Given a time in seconds for how long the note has been playing
-    // (sec) together with a Waveform, return a sample of the wave at
-    // that time.
-    public double at(double sec, Waveform w) {
-        double freq = pitch().frequency();
-        
-        
-        
-        return 0;
-    }
 }

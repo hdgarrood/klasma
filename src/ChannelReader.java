@@ -13,9 +13,8 @@ public class ChannelReader {
     // Tempo (semibreves / sec)
     private double tempo;
     
-    // Sample rate (samples / sec)
-    private double sampleRate;
-    
+    // 1 over the sample rate (samples / sec)
+    private double sampleDelta;
     
     public ChannelReader(Channel channel, double tempo, double sampleRate) {
         if (channel == null)
@@ -25,32 +24,60 @@ public class ChannelReader {
         this.currentNoteIndex = 0;
         this.currentNotePlayTime = 0;
         this.tempo = tempo;
-        this.sampleRate = sampleRate;
+        this.currentNoteLength = getCurrentNoteLength();
+        this.sampleDelta = 1.0 / sampleRate;
     }
     
-    public double getNext() {
-        advance();
-    }
-    
-    private void advance() {
-        double newPlayTime = this.currentNotePlayTime + this.sampleRate;
-        
-        if (this.currentNoteLength > newPlayTime) {
-            this.currentNotePlayTime = newPlayTime;
-        } else {
-            moveToNextNote();
-        }
-    }
-
-    private void moveToNextNote() {
-        this.currentNotePlayTime =
-                this.currentNoteLength - this.currentNotePlayTime;
-        this.currentNoteIndex++;
-        this.currentNoteLength =
-                getCurrentNote().value().length() * this.tempo;
+    private double getCurrentNoteLength() {
+        return getCurrentNote().value().length() * this.tempo;
     }
     
     private Note getCurrentNote() {
         return this.channel.notes()[this.currentNoteIndex];
+    }
+    
+    public boolean hasMore() {
+        return !atEnd();
+    }
+
+    private boolean atEnd() {
+        return this.channel.notes().length <= this.currentNoteIndex;
+    }
+    
+    // 
+    public double getNext() {
+        advance();
+        return getCurrentAmplitude();
+    }
+    
+    // Try to move to the next sample position. Returns true if we
+    // haven't yet reached the end, false otherwise.
+    private void advance() {
+        double newPlayTime = this.currentNotePlayTime + this.sampleDelta;
+        
+        if (this.currentNoteLength > newPlayTime) {
+            this.currentNotePlayTime = newPlayTime;
+        } else {
+            try {
+                moveToNextNote();
+            } catch (ArrayIndexOutOfBoundsException ex) {
+                throw new EndOfChannelException(ex);
+            }
+        }
+    }
+    
+    private double getCurrentAmplitude() {
+        double freq = getCurrentNote().pitch().frequency();
+        double t = this.currentNotePlayTime * freq;
+        return this.channel.waveform().at(t);
+    }
+
+    // Try to move along one note. Return true if successful. Returns
+    // false otherwise (ie if it's at the end)
+    private void moveToNextNote() {
+        this.currentNoteIndex++;
+        this.currentNotePlayTime = 0;
+        this.currentNoteLength = getCurrentNoteLength();
+        
     }
 }
