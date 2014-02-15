@@ -9,6 +9,11 @@ public class Note {
         this.value = value;
         this.pitch = pitch;
     }
+    
+    // Makes a rest.
+    public static Note Rest(NoteValue value) {
+        return new Note(value, null);
+    }
 
     public boolean isRest() {
         return this.pitch == null;

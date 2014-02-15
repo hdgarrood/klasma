@@ -15,7 +15,7 @@ public class ChannelReader {
     // Tempo (semibreves / sec)
     private double tempo;
     
-    // 1 over the sample rate (samples / sec)
+    // Time between samples (sec). This is 1 over the sample rate.
     private double sampleDelta;
     
     public ChannelReader(Channel channel, double tempo, double sampleRate) {
@@ -72,9 +72,15 @@ public class ChannelReader {
     }
     
     private double getCurrentAmplitude() {
-        double freq = getCurrentNote().pitch().frequency();
-        double t = this.currentNotePlayTime * freq;
-        return this.channel.waveform().at(t);
+        Note note = getCurrentNote();
+        
+        if (note.isRest())
+            return 0;
+        else {
+            double freq = getCurrentNote().pitch().frequency();
+            double t = this.currentNotePlayTime * freq;
+            return this.channel.waveform().at(t);
+        }
     }
 
     // Try to move along one note. Return true if successful. Returns

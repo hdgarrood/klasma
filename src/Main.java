@@ -14,7 +14,21 @@ public class Main {
            new Note(NoteValue.Minim,          c),
            new Note(NoteValue.Semibreve,      e),
         });
-        Track track = new Track(doeADeer);
+        Channel drums = new Channel(new Noise(), new Note[] {
+            new Note(NoteValue.Quaver,  c),
+            Note.Rest(NoteValue.Quaver),
+            Note.Rest(NoteValue.Minim.dotted()),
+            new Note(NoteValue.Quaver,  c),
+            Note.Rest(NoteValue.Quaver),
+            Note.Rest(NoteValue.Minim.dotted()),
+            new Note(NoteValue.Quaver,  c),
+            Note.Rest(NoteValue.Quaver),
+            Note.Rest(NoteValue.Minim.dotted()),
+            new Note(NoteValue.Quaver,  c),
+            Note.Rest(NoteValue.Quaver),
+            Note.Rest(NoteValue.Minim.dotted())
+        });
+        Track track = new Track(new Channel[] { doeADeer, drums });
         track.play();
     }
 }
