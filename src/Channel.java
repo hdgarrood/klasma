@@ -20,4 +20,8 @@ public class Channel {
     public Waveform waveform() {
         return waveform;
     }
+    
+    public ChannelReader getReader(double tempo, double sampleRate) {
+        return new ChannelReader(this, tempo, sampleRate);
+    }
 }

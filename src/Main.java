@@ -1,3 +1,5 @@
+import javax.sound.sampled.AudioInputStream;
+
 public class Main {
     public static void main(String[] args) {
         Pitch c = new Pitch(NoteName.C, 4);
@@ -12,12 +14,7 @@ public class Main {
            new Note(NoteValue.Minim,          c),
            new Note(NoteValue.Semibreve,      e),
         });
-        double tempo = 1.0/15;
-        double sampleRate = 64100;
-        ChannelReader rdr = new ChannelReader(doeADeer, tempo, sampleRate);
-        
-        for (int i = 0; i < 100; i++) {
-            System.out.println(rdr.getNext());
-        }
+        Track track = new Track(doeADeer);
+        AudioInputStream stream = track.toAudioInputStream();
     }
 }

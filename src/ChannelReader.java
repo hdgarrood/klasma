@@ -1,6 +1,8 @@
 public class ChannelReader {
     private Channel channel;
     
+    private boolean atEnd;
+    
     // What note in the Channel have we reached?
     private int currentNoteIndex;
     
@@ -24,6 +26,7 @@ public class ChannelReader {
         this.currentNoteIndex = 0;
         this.currentNotePlayTime = 0;
         this.tempo = tempo;
+        this.atEnd = false;
         this.currentNoteLength = getCurrentNoteLength();
         this.sampleDelta = 1.0 / sampleRate;
     }
@@ -41,13 +44,15 @@ public class ChannelReader {
     }
 
     private boolean atEnd() {
-        return this.channel.notes().length <= this.currentNoteIndex;
+        return this.atEnd;
     }
     
     // 
     public double getNext() {
+        if (atEnd()) throw new EndOfChannelException();
+        double next = getCurrentAmplitude();
         advance();
-        return getCurrentAmplitude();
+        return next;
     }
     
     // Try to move to the next sample position. Returns true if we
@@ -61,7 +66,7 @@ public class ChannelReader {
             try {
                 moveToNextNote();
             } catch (ArrayIndexOutOfBoundsException ex) {
-                throw new EndOfChannelException(ex);
+                this.atEnd = true;
             }
         }
     }
@@ -78,6 +83,5 @@ public class ChannelReader {
         this.currentNoteIndex++;
         this.currentNotePlayTime = 0;
         this.currentNoteLength = getCurrentNoteLength();
-        
     }
 }
