@@ -1,7 +1,7 @@
-import javax.sound.sampled.AudioInputStream;
+import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Pitch c = new Pitch(NoteName.C, 4);
         Pitch d = new Pitch(NoteName.D, 4);
         Pitch e = new Pitch(NoteName.E, 4);
@@ -15,6 +15,6 @@ public class Main {
            new Note(NoteValue.Semibreve,      e),
         });
         Track track = new Track(doeADeer);
-        AudioInputStream stream = track.toAudioInputStream();
+        track.play();
     }
 }
