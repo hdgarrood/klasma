@@ -1,4 +1,5 @@
 public class NoteValue {
+    public static NoteValue Breve          = new NoteValue(2.0);
     public static NoteValue Semibreve      = new NoteValue(1.0);
     public static NoteValue Minim          = new NoteValue(1.0/2);
     public static NoteValue Crotchet       = new NoteValue(1.0/4);
