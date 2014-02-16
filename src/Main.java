@@ -102,32 +102,93 @@ public class Main {
         Pitch g     = new Pitch(NoteName.G, 4);
         Pitch highb = new Pitch(NoteName.B, 5);
         
-        Channel chanA = new Channel(new SawtoothWave(), new Note[] {
-            new Note(NoteValue.Minim, lowfs),
-            new Note(NoteValue.Semibreve, lowb),
-            Note.Rest(NoteValue.Breve),
-            new Note(NoteValue.Minim, lowfs),
-            new Note(NoteValue.Semibreve, lowb),
+        Channel chanA = new Channel(new SquareWave(), new Note[] {
+            Note.Rest(NoteValue.Minim),
+            Note.Rest(NoteValue.Semibreve),
             Note.Rest(NoteValue.Semibreve),
             Note.Rest(NoteValue.Minim),
-            new Note(NoteValue.Minim, lowfs),
-            new Note(NoteValue.Semibreve, lowb),
-            Note.Rest(NoteValue.Breve),
+            Note.Rest(NoteValue.Semibreve),
+            Note.Rest(NoteValue.Semibreve),
+            Note.Rest(NoteValue.Minim),
+            
+            new Note(NoteValue.Minim.dotted(), b),
+            new Note(NoteValue.Semibreve.dotted(),d),
+            Note.Rest(NoteValue.Minim.dotted()),
+            
+            new Note(NoteValue.Minim.dotted(), b),
+            new Note(NoteValue.Semibreve.dotted(),e),
+            Note.Rest(NoteValue.Minim.dotted()),
+            
+            new Note(NoteValue.Minim.dotted(), b),
+            new Note(NoteValue.Semibreve.dotted(),d),
+            Note.Rest(NoteValue.Minim.dotted()),
+            
+            new Note(NoteValue.Minim.dotted(), b),
+            new Note(NoteValue.Semibreve.dotted(),e),
+            Note.Rest(NoteValue.Minim.dotted()),
+           
+            new Note(NoteValue.Minim, b),
+            new Note(NoteValue.Semibreve,a),
+            new Note(NoteValue.Semibreve,lowg),
+            Note.Rest(NoteValue.Minim),
+            
+            new Note(NoteValue.Minim, b),
+            new Note(NoteValue.Semibreve,a),
+            new Note(NoteValue.Semibreve,lowg),
+            Note.Rest(NoteValue.Minim),
+           
+            new Note(NoteValue.Minim,a),
+            new Note(NoteValue.Breve, b),
+            
+            new Note(NoteValue.Breve, lowe),
         });
-        Channel chanB = new Channel(new SquareWave(), new Note[] {
-            Note.Rest(NoteValue.Minim),
-            Note.Rest(NoteValue.Semibreve),
-            new Note(NoteValue.Semibreve, b),
-            Note.Rest(NoteValue.Minim),
-            Note.Rest(NoteValue.Semibreve),
-            new Note(NoteValue.Semibreve, b),
-            Note.Rest(NoteValue.Minim),
-            Note.Rest(NoteValue.Semibreve),
-            new Note(NoteValue.Semibreve, b),
+            
+         Channel chanB = new Channel(new SawtoothWave(), new Note[] {
+             new Note(NoteValue.Minim,lowfs),
+             new Note(NoteValue.Semibreve, lowb),
+             new Note(NoteValue.Semibreve, b),
+             Note.Rest(NoteValue.Minim),
+             //12
+             
+             new Note(NoteValue.Minim,lowfs),
+             new Note(NoteValue.Semibreve, lowb),
+             new Note(NoteValue.Semibreve, b),
+             Note.Rest(NoteValue.Minim),
+             
+             new Note(NoteValue.Minim,lowfs),
+             new Note(NoteValue.Semibreve, lowb),
+             new Note(NoteValue.Semibreve, b),
+             Note.Rest(NoteValue.Minim),
+             
+             new Note(NoteValue.Minim,lowfs),
+             new Note(NoteValue.Semibreve, lowb),
+             new Note(NoteValue.Semibreve, b),
+             Note.Rest(NoteValue.Minim),
+            
+             new Note(NoteValue.Minim,lowfs),
+             new Note(NoteValue.Semibreve, lowb),
+             new Note(NoteValue.Semibreve, b),
+             Note.Rest(NoteValue.Minim),
+             //12
+             
+             new Note(NoteValue.Minim,lowfs),
+             new Note(NoteValue.Semibreve, lowb),
+             new Note(NoteValue.Semibreve, b),
+             Note.Rest(NoteValue.Minim),
+             
+             new Note(NoteValue.Minim,lowfs),
+             new Note(NoteValue.Semibreve, lowb),
+             new Note(NoteValue.Semibreve, b),
+             Note.Rest(NoteValue.Minim),
+             
+             new Note(NoteValue.Minim,lowfs),
+             new Note(NoteValue.Semibreve, lowb),
+             new Note(NoteValue.Semibreve, b),
+             Note.Rest(NoteValue.Minim),
             
             
-
-        });
+         });
+        
         Track track = new Track(new Channel[] { chanA, chanB });
         track.play();
     }
