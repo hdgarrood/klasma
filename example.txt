@@ -1,19 +1,16 @@
-track { bassC melodyC }
+track 
+  bassC melodyC
 
-bassC :: channel square {
+bassC : channel square
   bass bass bass
-}
 
-melodyC :: channel triangle {
+melodyC : channel triangle
   melody melody melody
-}
 
-bass :: block {
+-- this is a comment
+bass : block
   D3+++ D3+++
-}
 
-melody :: block {
+melody : block
   R D D D3- D- F- E D F- E
   R Bb Bb R C- C C R- C
-}
-

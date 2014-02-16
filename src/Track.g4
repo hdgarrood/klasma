@@ -2,17 +2,29 @@ grammar Track;
 
 track: track_decl decl* ;
 
-track_decl: 'track' '{' IDENT+ '}' ;
+track_decl: TRACK track_body ;
+track_body: channel_list_line+ ;
+channel_list_line: ENDLINE (SPACE channel_name)+ SPACE? ;
+channel_name: ID ;
 
-decl: block_decl | channel_decl ;
+decl: channel_decl | block_decl | ENDLINE ;
 
-block_decl: IDENT '::' 'block' '{' block_body '}' ;
-block_body: (note)+ ;
+channel_decl: ID COLON CHANNEL WAVE channel_body ;
+channel_body: block_list_line+ ;
+block_list_line: ENDLINE (SPACE block_name)+ SPACE? ;
+block_name: ID ;
+
+block_decl: ID COLON BLOCK block_body ;
+block_body: note_list_line+ ;
+note_list_line: ENDLINE (SPACE note)+ SPACE? ;
 note: NOTENAME OCTAVE? LENGTH? ;
 
-channel_decl: IDENT '::' 'channel' WAVE '{' channel_body '}' ;
-channel_body: (block_name)+ ;
-block_name: IDENT ;
+ID      : [a-zA-Z][a-zA-Z0-9_]+ ;
+COLON   : ':' ;
+CHANNEL : 'channel';
+BLOCK   : 'block' ;
+TRACK   : 'track' ;
+WAVE    : 'triangle' | 'square' | 'sawtooth' | 'noise' ;
 
 NOTENAME: 'Ab'
         | 'A'
@@ -31,13 +43,12 @@ NOTENAME: 'Ab'
         | 'Gb'
         | 'G'
         | 'G#'
-        | 'R'
+        | 'R' // rest
         ;
+OCTAVE  : [0-9]+ ;
+LENGTH  : ('+' | '-' | '.')+ ;
 
-OCTAVE: [0-9] | '10' ;
-LENGTH: [-+.]+ ;
-
-WAVE: 'triangle' | 'square' | 'sawtooth' | 'noise' ;
-
-IDENT: [a-zA-Z][a-zA-Z0-9_]+ ;
-WS: [\t\r\n ]+ -> skip ;
+NEWLINE : '\r\n' | '\n' ;
+ENDLINE : SPACE? NEWLINE ;
+SPACE   : (' ' | '\t')+ ;
+COMMENT : '--' .*? NEWLINE -> skip ;
