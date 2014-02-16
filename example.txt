@@ -1,16 +1,16 @@
-track 
+TRACK 
   bassC melodyC
 
-bassC : channel square
+bassC : CHANNEL SQUARE
   bass bass bass
 
-melodyC : channel triangle
+melodyC : CHANNEL TRIANGLE
   melody melody melody
 
 -- this is a comment
-bass : block
-  D3+++ D3+++
+bass : BLOCK
+  D2+++ D2+++
 
-melody : block
+melody : BLOCK
   R D D D3- D- F- E D F- E
   R Bb Bb R C- C C R- C
