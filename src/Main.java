@@ -188,7 +188,8 @@ public class Main {
          });
         
         Track track = new Track(new Channel[] { chanA, chanB });
-        AudioOutput.play(track.toAudioInputStream());
+        AudioOutput.writeWaveFile(track.toAudioInputStream(),
+                "/home/harry/media/laura2.wav");
     }
     
     public static void main(String[] args) throws IOException {
