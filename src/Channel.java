@@ -1,19 +1,41 @@
 public class Channel {
     private Waveform waveform;
-    private Note[] notes;
+    private Block[] blocks;
 
-    public Channel(Waveform waveform, Note[] notes) {
+    public Channel(Waveform waveform, Block[] blocks) {
         if (waveform == null)
             throw new IllegalArgumentException("waveform may not be null");
 
-        if (notes == null)
-            throw new IllegalArgumentException("notes may not be null");
+        if (blocks == null)
+            throw new IllegalArgumentException("blocks may not be null");
 
         this.waveform = waveform;
-        this.notes = notes;
+        this.blocks = blocks;
+    }
+
+    public Block[] blocks() {
+        return blocks;
     }
     
     public Note[] notes() {
+        int totalLength = 0;
+
+        for (int i = 0; i < blocks.length; i++) {
+            totalLength += blocks[i].length();
+        }
+
+        Note[] notes = new Note[totalLength];
+        int currentIndex = 0;
+
+        for (int i = 0; i < blocks.length; i++) {
+            Note[] blockNotes = blocks[i].notes();
+
+            for (int j = 0; j < blockNotes.length; j++) {
+                notes[currentIndex] = blockNotes[j];
+                currentIndex++;
+            }
+        }
+
         return notes;
     }
     
