@@ -1,29 +1,23 @@
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.DataLine;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.SourceDataLine;
 
 public class Track {
-    private Channel[] channels;
     private static double tempo = 1;
     private static double sampleRate = 64100;
-    private AudioFormat audioFormat;
-            
-    private static int BUFFER_SIZE = 256;
+    private static AudioFormat audioFormat =
+            new AudioFormat((float)sampleRate, 8, 1, true, false);
+    
+    private Channel[] channels;
     
     public Track(Channel[] channels) {
         this.channels = channels;
-        this.audioFormat = makeAudioFormat();
     }
     
-    private AudioFormat makeAudioFormat() {
-        return new AudioFormat((float)sampleRate, 8, 1, true, false);
+    public static AudioFormat getAudioFormat() {
+        return audioFormat;
     }
     
     public AudioInputStream toAudioInputStream() {
@@ -44,7 +38,7 @@ public class Track {
         
         return new AudioInputStream(
                 new ByteArrayInputStream(getArray(data)),
-                this.audioFormat,
+                audioFormat,
                 data.size());
     }
     
@@ -79,44 +73,5 @@ public class Track {
         }
         
         return array;
-    }
-    
-    public void play() throws IOException {
-        AudioInputStream stream = toAudioInputStream();
-        
-        SourceDataLine line = null;
-        DataLine.Info  info = new DataLine.Info(
-                SourceDataLine.class,
-                this.audioFormat);
-        try
-        {
-            line = (SourceDataLine) AudioSystem.getLine(info);
-            line.open(audioFormat);
-        }
-        catch (LineUnavailableException e)
-        {
-            e.printStackTrace();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        line.start();
-
-        byte[] data = new byte[BUFFER_SIZE];
-        int totalToRead = stream.available();
-        int totalRead = 0;
-        while (totalRead < totalToRead)
-        {
-            int read = stream.read(data, 0, BUFFER_SIZE);
-            if (read == -1) break;
-            totalRead += read;
-            line.write(data, 0, read);
-        }
-
-        line.drain();
-        line.stop();
-        line.close();
-        stream.close();
     }
 }

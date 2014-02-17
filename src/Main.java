@@ -52,9 +52,7 @@ public class Main {
             Note.Rest(NoteValue.Minim.dotted())
         });
         Track track = new Track(new Channel[] { chanA, chanB, drums });
-        track.play();
-        track.play();
-        track.play();    
+        AudioOutput.play(track.toAudioInputStream());    
     }
     
     private static void laura() throws IOException {
@@ -85,7 +83,7 @@ public class Main {
 
         });
         Track track = new Track(new Channel[] { chanB });
-        track.play();
+        AudioOutput.play(track.toAudioInputStream());
     }
     
     private static void laura2() throws IOException {
@@ -190,7 +188,7 @@ public class Main {
          });
         
         Track track = new Track(new Channel[] { chanA, chanB });
-        track.play();
+        AudioOutput.play(track.toAudioInputStream());
     }
     
     public static void main(String[] args) throws IOException {
