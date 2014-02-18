@@ -26,4 +26,44 @@ public enum NoteName {
     public int toInt() {
         return this.value;
     }
+
+    public static NoteName parse(String str) {
+        switch (str) {
+        case "C":
+            return C;
+        case "C#":
+            return CSharp;
+        case "Db":
+            return DFlat;
+        case "D":
+            return D;
+        case "D#":
+            return DSharp;
+        case "Eb":
+            return EFlat;
+        case "E":
+            return E;
+        case "F":
+            return F;
+        case "F#":
+            return FSharp;
+        case "Gb":
+            return GFlat;
+        case "G":
+            return G;
+        case "G#":
+            return GSharp;
+        case "Ab":
+            return AFlat;
+        case "A":
+            return A;
+        case "A#":
+            return ASharp;
+        case "Bb":
+            return BFlat;
+        case "B":
+            return B;
+        }
+        return null;
+    }
 }

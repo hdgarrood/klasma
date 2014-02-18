@@ -55,4 +55,8 @@ public class AudioOutput {
         line.close();
         stream.close();
     }
+
+    public static void play(Track track) throws IOException {
+        play(track.toAudioInputStream());
+    }
 }

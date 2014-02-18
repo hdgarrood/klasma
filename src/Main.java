@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.io.FileInputStream;
 
 public class Main {
     private static void harry() throws IOException {
@@ -203,7 +204,23 @@ public class Main {
     //             "/home/harry/media/laura2.wav");
     // }
     
+    private static void fuckYouEclipse() throws IOException {
+        System.setIn(new FileInputStream("example.txt"));
+        parse();
+    }
+
+    private static void parse() throws IOException {
+        Track track = null;
+        try {
+            track = TrackBuilder.build(System.in);
+        } catch (TrackException e) {
+            System.out.println(e.toString());
+            return;
+        }
+        AudioOutput.play(track);
+    }
+
     public static void main(String[] args) throws IOException {
-        harry();
+        fuckYouEclipse();
     }
 }
