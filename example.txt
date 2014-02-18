@@ -4,7 +4,7 @@ TRACK
 bassC : CHANNEL SQUARE
   bass bass bass
 
-melodyC : CHANNEL TRIANGLE
+melodyC : CHANNEL SAWTOOTH
   melody melody melody
 
 -- this is a comment
@@ -13,4 +13,4 @@ bass : BLOCK
 
 melody : BLOCK
   R D D D3- D- F- E D F- E
-  R Bb Bb R C- C C R- C
+  R Bb3 Bb3 R C- C C R- C

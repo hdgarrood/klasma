@@ -1,0 +1,8 @@
+TRACK
+  ch1
+
+ch1 : CHANNEL TRIANGLE
+  bl1 bl1
+
+bl1 : BLOCK
+  C D E F G F E D C B3

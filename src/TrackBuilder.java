@@ -203,7 +203,8 @@ public class TrackBuilder extends TrackBaseListener {
     }
 
     private NoteValue lengthToValue(String str) {
-        double value = 1.0;
+        // Default note length is crotchet
+        double value = 1.0/4;
         for (int i = 0; i < str.length(); i++) {
             char next = str.charAt(i);
             switch (next) {
