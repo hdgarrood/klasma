@@ -49,7 +49,7 @@ public class TrackBuilder extends TrackBaseListener {
     public Track toTrack() {
         Map<String, Channel> allChannels = getAllDeclaredChannels();
         List<Channel> channels = getChannelsToBeInTrack(allChannels);
-        return new Track((Channel[])channels.toArray());
+        return new Track(channels);
     }
 
     private Map<String, Channel> getAllDeclaredChannels() {
@@ -69,7 +69,7 @@ public class TrackBuilder extends TrackBaseListener {
             while (blockNameIter.hasNext()) {
                 String blockName = blockNameIter.next();
                 if (blockDecls.containsKey(blockName)) {
-                    blocks.add(new Block((Note[])blockDecls.get(blockName).toArray()));
+                    blocks.add(new Block(blockDecls.get(blockName)));
                 } else {
                     throw new TrackException(String.format(
                         "Unknown block '%s' in declaration of channel '%s'",

@@ -1,15 +1,17 @@
-public class Block {
-    private Note[] notes;
+import java.util.List;
 
-    public Block(Note[] notes) {
+public class Block {
+    private List<Note> notes;
+
+    public Block(List<Note> notes) {
         this.notes = notes;
     }
 
     public int length() {
-        return notes.length;
+        return notes.size();
     }
     
-    public Note[] notes() {
+    public List<Note> notes() {
         return notes;
     }
 }

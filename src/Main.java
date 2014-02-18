@@ -2,70 +2,70 @@ import java.io.IOException;
 import java.io.FileInputStream;
 
 public class Main {
-    private static void harry() throws IOException {
-        Pitch bottomD = new Pitch(NoteName.D, 2);
-        Pitch bf = new Pitch(NoteName.BFlat, 3);
-        Pitch c = new Pitch(NoteName.C, 4);
-        Pitch d = new Pitch(NoteName.D, 4);
-        Pitch e = new Pitch(NoteName.E, 4);
-        Pitch f = new Pitch(NoteName.F, 4);
+    // private static void harry() throws IOException {
+    //     Pitch bottomD = new Pitch(NoteName.D, 2);
+    //     Pitch bf = new Pitch(NoteName.BFlat, 3);
+    //     Pitch c = new Pitch(NoteName.C, 4);
+    //     Pitch d = new Pitch(NoteName.D, 4);
+    //     Pitch e = new Pitch(NoteName.E, 4);
+    //     Pitch f = new Pitch(NoteName.F, 4);
         
-        Block bass = new Block(new Note[] {
-           new Note(NoteValue.Breve, bottomD),
-           new Note(NoteValue.Breve, bottomD),
-        });
-        Channel chanA = new Channel(new SquareWave(), new Block[] {
-            bass, bass, bass
-        });
+    //     Block bass = new Block(new ArrayList<Note>({
+    //        new Note(NoteValue.Breve, bottomD),
+    //        new Note(NoteValue.Breve, bottomD),
+    //     }));
+    //     Channel chanA = new Channel(new SquareWave(), new Block[] {
+    //         bass, bass, bass
+    //     });
         
-        Block melody = new Block(new Note[] {
-           Note.Rest(NoteValue.Crotchet),
-           new Note(NoteValue.Crotchet, d),
-           new Note(NoteValue.Crotchet, d),
-           new Note(NoteValue.Quaver, bottomD),
-           new Note(NoteValue.Quaver, d),
-           new Note(NoteValue.Quaver, f),
-           new Note(NoteValue.Crotchet, e),
-           new Note(NoteValue.Crotchet, d),
-           new Note(NoteValue.Quaver, f),
-           new Note(NoteValue.Crotchet, e),
+    //     Block melody = new Block(new Note[] {
+    //        Note.Rest(NoteValue.Crotchet),
+    //        new Note(NoteValue.Crotchet, d),
+    //        new Note(NoteValue.Crotchet, d),
+    //        new Note(NoteValue.Quaver, bottomD),
+    //        new Note(NoteValue.Quaver, d),
+    //        new Note(NoteValue.Quaver, f),
+    //        new Note(NoteValue.Crotchet, e),
+    //        new Note(NoteValue.Crotchet, d),
+    //        new Note(NoteValue.Quaver, f),
+    //        new Note(NoteValue.Crotchet, e),
            
-           Note.Rest(NoteValue.Crotchet),
-           new Note(NoteValue.Crotchet, bf),
-           new Note(NoteValue.Crotchet, bf),
-           Note.Rest(NoteValue.Crotchet),
-           new Note(NoteValue.Quaver, c),
-           new Note(NoteValue.Crotchet, c),
-           new Note(NoteValue.Crotchet, c),
-           Note.Rest(NoteValue.Quaver),
-           new Note(NoteValue.Crotchet, c),
-        });
+    //        Note.Rest(NoteValue.Crotchet),
+    //        new Note(NoteValue.Crotchet, bf),
+    //        new Note(NoteValue.Crotchet, bf),
+    //        Note.Rest(NoteValue.Crotchet),
+    //        new Note(NoteValue.Quaver, c),
+    //        new Note(NoteValue.Crotchet, c),
+    //        new Note(NoteValue.Crotchet, c),
+    //        Note.Rest(NoteValue.Quaver),
+    //        new Note(NoteValue.Crotchet, c),
+    //     });
         
-        Channel chanB = new Channel(new SawtoothWave(), new Block[] {
-            melody, melody, melody
-        });
+    //     Channel chanB = new Channel(new SawtoothWave(), new Block[] {
+    //         melody, melody, melody
+    //     });
 
-        Block drums = new Block(new Note[] {
-            new Note(NoteValue.Quaver,  d),
-            Note.Rest(NoteValue.Quaver),
-            Note.Rest(NoteValue.Minim.dotted()),
-            new Note(NoteValue.Quaver,  d),
-            Note.Rest(NoteValue.Quaver),
-            Note.Rest(NoteValue.Minim.dotted()),
-            new Note(NoteValue.Quaver,  d),
-            Note.Rest(NoteValue.Quaver),
-            Note.Rest(NoteValue.Minim.dotted()),
-            new Note(NoteValue.Quaver,  d),
-            Note.Rest(NoteValue.Quaver),
-            Note.Rest(NoteValue.Minim.dotted())
-        });
+    //     Block drums = new Block(new Note[] {
+    //         new Note(NoteValue.Quaver,  d),
+    //         Note.Rest(NoteValue.Quaver),
+    //         Note.Rest(NoteValue.Minim.dotted()),
+    //         new Note(NoteValue.Quaver,  d),
+    //         Note.Rest(NoteValue.Quaver),
+    //         Note.Rest(NoteValue.Minim.dotted()),
+    //         new Note(NoteValue.Quaver,  d),
+    //         Note.Rest(NoteValue.Quaver),
+    //         Note.Rest(NoteValue.Minim.dotted()),
+    //         new Note(NoteValue.Quaver,  d),
+    //         Note.Rest(NoteValue.Quaver),
+    //         Note.Rest(NoteValue.Minim.dotted())
+    //     });
 
-        Channel drumsC = new Channel(new Noise(), new Block[] {
-            drums, drums, drums
-        });
-        Track track = new Track(new Channel[] { chanA, chanB, drumsC });
-        AudioOutput.play(track.toAudioInputStream());    
-    }
+    //     Channel drumsC = new Channel(new Noise(), new Block[] {
+    //         drums, drums, drums
+    //     });
+    //     Track track = new Track(new Channel[] { chanA, chanB, drumsC });
+    //     AudioOutput.play(track.toAudioInputStream());    
+    // }
     
     // private static void laura() throws IOException {
     //     Pitch lowe  = new Pitch(NoteName.E, 3);

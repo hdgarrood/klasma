@@ -1,8 +1,12 @@
+import java.util.List;
+import java.util.Iterator;
+import java.util.ArrayList;
+
 public class Channel {
     private Waveform waveform;
-    private Block[] blocks;
+    private List<Block> blocks;
 
-    public Channel(Waveform waveform, Block[] blocks) {
+    public Channel(Waveform waveform, List<Block> blocks) {
         if (waveform == null)
             throw new IllegalArgumentException("waveform may not be null");
 
@@ -13,27 +17,17 @@ public class Channel {
         this.blocks = blocks;
     }
 
-    public Block[] blocks() {
+    public List<Block> blocks() {
         return blocks;
     }
     
-    public Note[] notes() {
-        int totalLength = 0;
+    public List<Note> notes() {
+        List<Note> notes = new ArrayList<Note>();
 
-        for (int i = 0; i < blocks.length; i++) {
-            totalLength += blocks[i].length();
-        }
-
-        Note[] notes = new Note[totalLength];
-        int currentIndex = 0;
-
-        for (int i = 0; i < blocks.length; i++) {
-            Note[] blockNotes = blocks[i].notes();
-
-            for (int j = 0; j < blockNotes.length; j++) {
-                notes[currentIndex] = blockNotes[j];
-                currentIndex++;
-            }
+        Iterator<Block> iterator = blocks.iterator();
+        while (iterator.hasNext()) {
+            Block b = iterator.next();
+            notes.addAll(b.notes());
         }
 
         return notes;

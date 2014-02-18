@@ -1,5 +1,6 @@
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -10,9 +11,9 @@ public class Track {
     private static AudioFormat audioFormat =
             new AudioFormat((float)sampleRate, 8, 1, true, false);
     
-    private Channel[] channels;
+    private List<Channel> channels;
     
-    public Track(Channel[] channels) {
+    public Track(List<Channel> channels) {
         this.channels = channels;
     }
     
@@ -43,11 +44,11 @@ public class Track {
     }
     
     private ChannelReader[] getChannelReaders() {
-        int channels = this.channels.length;
-        ChannelReader[] readers = new ChannelReader[channels];
+        int numChannels = this.channels.size();
+        ChannelReader[] readers = new ChannelReader[numChannels];
         
-        for (int i = 0; i < channels; i++) {
-            readers[i] = this.channels[i].getReader(tempo, sampleRate);
+        for (int i = 0; i < numChannels; i++) {
+            readers[i] = this.channels.get(i).getReader(tempo, sampleRate);
         }
         
         return readers;

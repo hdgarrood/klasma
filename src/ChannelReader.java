@@ -36,7 +36,7 @@ public class ChannelReader {
     }
     
     private Note getCurrentNote() {
-        return this.channel.notes()[this.currentNoteIndex];
+        return this.channel.notes().get(this.currentNoteIndex);
     }
     
     public boolean hasMore() {
