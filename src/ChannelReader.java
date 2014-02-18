@@ -65,7 +65,7 @@ public class ChannelReader {
         } else {
             try {
                 moveToNextNote();
-            } catch (ArrayIndexOutOfBoundsException ex) {
+            } catch (IndexOutOfBoundsException ex) {
                 this.atEnd = true;
             }
         }
