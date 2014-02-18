@@ -1,0 +1,8 @@
+TRACK
+  chan
+
+chan : CHANNEL SAWTOOTH
+  b1
+
+b1 : BLOCK
+  E3+ E D B3 B3 A3 G3 E3 F#3 G3 D+ B3+
