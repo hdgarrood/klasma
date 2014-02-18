@@ -45,7 +45,7 @@ NOTENAME: 'Ab'
         | 'Gb'
         | 'G'
         | 'G#'
-        | 'R' // rest
+        | '^' // rest
         ;
 OCTAVE  : [0-9]+ ;
 LENGTH  : ('+' | '-' | '.')+ ;

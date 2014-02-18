@@ -8,15 +8,15 @@ chanA : CHANNEL SQUARE
   m3
 
 rests : BLOCK
-  R+ R++ R++
-  R+ R++ R++
+  ^+ ^++ ^++
+  ^+ ^++ ^++
 
 m1 : BLOCK
-  B3+. D4++. R+.
-  B3+. E4++. R+.
+  B3+. D4++. ^+.
+  B3+. E4++. ^+.
   
 m2 : BLOCK
-  B3+ A3++ G3++ R+
+  B3+ A3++ G3++ ^+
 
 m3 : BLOCK
   A3++ B3+++ E3+++
@@ -25,4 +25,4 @@ chanB : CHANNEL SAWTOOTH
   m4 m4 m4 m4 m4 m4 m4 m4
 
 m4 : BLOCK
-  F#3+ B2++ B3++ R+
+  F#3+ B2++ B3+. ^+.

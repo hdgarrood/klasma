@@ -12,5 +12,5 @@ bass : BLOCK
   D2+++ D2+++
 
 melody : BLOCK
-  R D D D3- D- F- E D F- E
-  R Bb3 Bb3 R C- C C R- C
+  ^ D D D3- D- F- E D F- E
+  ^ Bb3 Bb3 ^ C- C C ^- C
