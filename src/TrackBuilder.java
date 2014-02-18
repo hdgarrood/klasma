@@ -19,12 +19,10 @@ public class TrackBuilder extends TrackBaseListener {
     // tree that contains the channel or block they reference yet; however
     // blocks do contain all the info necessary to make a Note, so they are
     // stored as a Map<String, Block>
-    private List<String> channelsInTrack =
-        new ArrayList<String>();
-    private Map<String, List<String>> channelDecls =
-        new HashMap<String, List<String>>();
-    private Map<String, List<Note>> blockDecls =
-        new HashMap<String, List<Note>>();
+    private List<String> channelsInTrack           = new ArrayList<>();
+    private Map<String, List<String>> channelDecls = new HashMap<>();
+    private Map<String, List<Note>> blockDecls     = new HashMap<>();
+    private Map<String, Waveform> channelWaveforms = new HashMap<>();
 
     private String currentChannel = null;
     private String currentBlock = null;
@@ -47,57 +45,89 @@ public class TrackBuilder extends TrackBaseListener {
     }
 
     public Track toTrack() {
-        Map<String, Channel> allChannels = getAllDeclaredChannels();
-        List<Channel> channels = getChannelsToBeInTrack(allChannels);
-        return new Track(channels);
+        Map<String, Block> blocks     = constructBlocks();
+        Map<String, Channel> channels = constructChannels(blocks);
+        List<Channel> filteredChannels =
+            getWhereKeyIn(channels, channelsInTrack);
+        return new Track(filteredChannels);
     }
 
-    private Map<String, Channel> getAllDeclaredChannels() {
-        Map<String, Channel> channels = new HashMap<String, Channel>();
-        Iterator<String> channelDeclIter = channelDecls.keySet().iterator();
+    private Map<String, Block> constructBlocks() {
+        Map<String, Block> retval = new HashMap<>();
 
-        while (channelDeclIter.hasNext()) {
-            // The name of a channel declaration appearing in the track.
-            String channelName = channelDeclIter.next();
-            // The blocks appearing in the channel declaration
+        Iterator<String> iter = blockDecls.keySet().iterator();
+        while (iter.hasNext()) {
+            String blockName = iter.next();
+            List<Note> notes = blockDecls.get(blockName);
+            retval.put(blockName, new Block(notes));
+        }
+
+        return retval;
+    }
+
+    private Map<String, Channel> constructChannels(
+            Map<String, Block> blockMap) {
+        Map<String, Channel> retval = new HashMap<>();
+
+        Iterator<String> iter = channelDecls.keySet().iterator();
+        while (iter.hasNext()) {
+            String channelName = iter.next();
             List<String> blockNames = channelDecls.get(channelName);
-            // To be populated imminently with blocks referenced in this
-            // channel
-            List<Block> blocks = new ArrayList<Block>();
-
-            Iterator<String> blockNameIter = blockNames.iterator();
-            while (blockNameIter.hasNext()) {
-                String blockName = blockNameIter.next();
-                if (blockDecls.containsKey(blockName)) {
-                    blocks.add(new Block(blockDecls.get(blockName)));
-                } else {
-                    throw new TrackException(String.format(
-                        "Unknown block '%s' in declaration of channel '%s'",
-                        blockName, channelName));
-                }
-            }
+            List<Block> blocks =
+                convertEachToBlock(blockNames, blockMap, channelName);
+            Waveform wf = channelWaveforms.get(channelName);
+            retval.put(channelName, new Channel(wf, blocks));
         }
 
-        return channels;
+        return retval;
     }
 
-    private List<Channel> getChannelsToBeInTrack(
-            Map<String, Channel> allChannels) {
-        Iterator<String> iterator = channelsInTrack.iterator();
-        List<Channel> channels = new ArrayList<Channel>();
+    // Convert a list of strings (block names) to a list of blocks.
+    // Arguments:
+    //   blockNames:  names of blocks to convert
+    //   blockMap:    where to look for blocks
+    //   channelName: the channel where these blocks occur. Used for error
+    //                messages.
+    private List<Block> convertEachToBlock(
+            List<String> blockNames,
+            Map<String, Block> blockMap,
+            String channelName) {
+        List<Block> retval = new ArrayList<>();
 
-        while (iterator.hasNext()) {
-            String channelName = iterator.next();
-            if (allChannels.containsKey(channelName)) {
-                channels.add(allChannels.get(channelName));
-            } else {
+        Iterator<String> iter = blockNames.iterator();
+        while (iter.hasNext()) {
+            String blockName = iter.next();
+            Block block = blockMap.get(blockName);
+
+            if (block == null)
                 throw new TrackException(String.format(
-                    "Unknown channel '%s' in track declaration",
-                    channelName));
-            }
+                    "Unknown block '%s' in declaration for channel '%s'",
+                    blockName, channelName));
+            else
+                retval.add(block);
+        }
+        return retval;
+    }
+
+    private List<Channel> getWhereKeyIn(
+            Map<String, Channel> map,
+            List<String> whitelist) {
+        List<Channel> retval = new ArrayList<>();
+
+        Iterator<String> iter = map.keySet().iterator();
+        while (iter.hasNext()) {
+            String key = iter.next();
+            if (whitelist.contains(key))
+                retval.add(map.get(key));
         }
 
-        return channels;
+        return retval;
+    }
+
+    // Inside the track declaration
+    public void enterChannel_name(TrackParser.Channel_nameContext ctx) {
+        String channelName = ctx.ID().getSymbol().getText();
+        this.channelsInTrack.add(channelName);
     }
 
     public void enterChannel_decl(TrackParser.Channel_declContext ctx) {
@@ -111,6 +141,10 @@ public class TrackBuilder extends TrackBaseListener {
             this.channelDecls.put(
                     this.currentChannel, new ArrayList<String>());
         }
+
+        String waveformName = ctx.WAVE().getSymbol().getText();
+        Waveform waveform = WaveformParser.parse(waveformName);
+        this.channelWaveforms.put(channelName, waveform);
     }
 
     public void enterBlock_name(TrackParser.Block_nameContext ctx) {
@@ -191,10 +225,5 @@ public class TrackBuilder extends TrackBaseListener {
 
     public void exitBlock_decl(TrackParser.Block_declContext ctx) {
         this.currentBlock = null;
-    }
-
-    private List<Note> getNotes(TrackParser.Block_declContext ctx) {
-        return new ArrayList<Note>();
-        //return ctx.getTokens(TrackParser.ID);
     }
 }
