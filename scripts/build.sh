@@ -26,6 +26,7 @@ compile_sources() {
         -sourcepath "$SOURCEPATH"   \
         -cp "$CLASSPATH"            \
         -d "$OUTPUTDIR"             \
+        -Xlint:all                  \
         src/*.java
 }
 
