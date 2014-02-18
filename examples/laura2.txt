@@ -19,10 +19,10 @@ m2 : BLOCK
   B3+ A3++ G3++ ^+
 
 m3 : BLOCK
-  A3++ B3+++ E3+++
+  A3+ B3+++ E3+++
 
 chanB : CHANNEL SAWTOOTH
   m4 m4 m4 m4 m4 m4 m4 m4
 
 m4 : BLOCK
-  F#3+ B2++ B3+. ^+.
+  F#3+ B2++ B3++ ^+
