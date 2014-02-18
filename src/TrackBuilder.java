@@ -197,9 +197,13 @@ public class TrackBuilder extends TrackBaseListener {
     private Note makeNote(String noteNameStr, int octave, String length) {
         NoteValue noteValue = lengthToValue(length);
         NoteName noteName = NoteName.parse(noteNameStr);
-        Pitch pitch = noteName == null ? null : new Pitch(noteName, octave);
 
-        return new Note(noteValue, pitch);
+        if (noteName == null)
+            return Note.Rest(noteValue);
+        else {
+            Pitch pitch = new Pitch(noteName, octave);
+            return new Note(noteValue, pitch);
+        }
     }
 
     private NoteValue lengthToValue(String str) {
