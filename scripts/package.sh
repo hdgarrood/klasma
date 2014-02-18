@@ -17,7 +17,7 @@ package-inf1op-jar() {
     jar xf "$ANTLR_JAR_PATH"
 
     echo "Creating inf1op.jar..."
-    jar cmf Manifest.txt ../inf1op.jar *
+    jar cmf ../Manifest.txt ../inf1op.jar *
     echo "Done."
 
     qpopd
