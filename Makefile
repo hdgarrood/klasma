@@ -1,23 +1,20 @@
 SOURCE_DIR	   = src
-GEN_SOURCE_DIR = gen_src
-CLASS_DIR      = bin
-GEN_CLASS_DIR  = bin/gen
+GEN_SOURCE_DIR = build/gen_src
+CLASS_DIR      = build/class
+GEN_CLASS_DIR  = build/gen_class
 PACKAGING_DIR  = packaging
 ANTLR_JAR_PATH = lib/antlr-4.2-complete.jar
 SOURCEPATH     = "$(SOURCE_DIR):$(GEN_SOURCE_DIR)"
 CLASSPATH      = $(ANTLR_JAR_PATH)
 
 SOURCES = $(wildcard src/*.java)
-
 CLASSES = $(patsubst %.java,%.class,$(addprefix $(CLASS_DIR)/,$(notdir $(SOURCES))))
-
 GEN_SOURCES = $(addprefix $(GEN_SOURCE_DIR)/,TrackBaseListener.java TrackLexer.java TrackLexer.tokens TrackListener.java TrackParser.java Track.tokens)
-
 GEN_CLASSES = $(addprefix $(GEN_CLASS_DIR)/,TrackBaseListener.class TrackLexer.class TrackListener.class TrackParser$$Block_bodyContext.class TrackParser$$Block_declContext.class TrackParser$$Block_list_lineContext.class TrackParser$$Block_nameContext.class TrackParser$$Channel_bodyContext.class TrackParser$$Channel_declContext.class TrackParser$$Channel_list_lineContext.class TrackParser$$Channel_nameContext.class TrackParser.class TrackParser$$DeclContext.class TrackParser$$EndlineContext.class TrackParser$$NoteContext.class TrackParser$$Note_list_lineContext.class TrackParser$$Track_bodyContext.class TrackParser$$TrackContext.class TrackParser$$Track_declContext.class)
 
 GRAMMAR = src/Track.g4
 MANIFEST = Manifest.txt
-JAR_FILE = inf1op.jar
+JAR_FILE = klasma.jar
 
 .PHONY: extract_antlr clean
 
@@ -57,10 +54,11 @@ extract_antlr: $(ANTLR_JAR_PATH)
 	cd $(PACKAGING_DIR); \
 		jar xf ../$(ANTLR_JAR_PATH)
 
+# Deletes all files created by the build.
+# 'subst' is necessary to escape dollars from the shell. :(
 clean:
 	-rm -f $(CLASSES)
 	-rm -f $(GEN_SOURCES)
-	# escape dollars in filenames
 	-rm -f $(subst $$,\$$,$(GEN_CLASSES))
 	-rm -rf $(PACKAGING_DIR)/*
 	-rm -f $(JAR_FILE)
