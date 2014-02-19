@@ -58,9 +58,9 @@ extract_antlr: $(ANTLR_JAR_PATH)
 		jar xf ../$(ANTLR_JAR_PATH)
 
 clean:
-	-rm $(CLASSES)
-	-rm $(GEN_SOURCES)
+	-rm -f $(CLASSES)
+	-rm -f $(GEN_SOURCES)
 	# escape dollars in filenames
-	-rm $(subst $$,\$$,$(GEN_CLASSES))
-	-rm -r $(PACKAGING_DIR)/*
-	-rm $(JAR_FILE)
+	-rm -f $(subst $$,\$$,$(GEN_CLASSES))
+	-rm -rf $(PACKAGING_DIR)/*
+	-rm -f $(JAR_FILE)
