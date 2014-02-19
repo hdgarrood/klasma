@@ -60,6 +60,7 @@ extract_antlr: $(ANTLR_JAR_PATH)
 clean:
 	-rm $(CLASSES)
 	-rm $(GEN_SOURCES)
-	-rm $(GEN_CLASSES)
+	# escape dollars in filenames
+	-rm $(subst $$,\$$,$(GEN_CLASSES))
 	-rm -r $(PACKAGING_DIR)/*
 	-rm $(JAR_FILE)

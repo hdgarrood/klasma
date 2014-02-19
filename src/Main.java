@@ -2,11 +2,6 @@ import java.io.IOException;
 import java.io.FileInputStream;
 
 public class Main {
-    private static void fuckYouEclipse() throws IOException {
-        System.setIn(new FileInputStream("example.txt"));
-        parse();
-    }
-
     private static void parse() throws IOException {
         Track track = null;
         try {
