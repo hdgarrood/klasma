@@ -10,10 +10,14 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 
 public class AudioOutput {    
-    public static void writeWaveFile(AudioInputStream stream, String filename)
-            throws IOException {
-        OutputStream out = new FileOutputStream(filename);
+    public static void writeWaveFile(AudioInputStream stream,
+            OutputStream out) throws IOException {
         AudioSystem.write(stream, AudioFileFormat.Type.WAVE, out);
+    }
+
+    public static void writeWaveFile(Track track, OutputStream out) 
+            throws IOException {
+        writeWaveFile(track.toAudioInputStream(), out);
     }
     
     private static int BUFFER_SIZE = 1024;
