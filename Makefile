@@ -15,10 +15,12 @@ GRAMMAR = src/Track.g4
 MANIFEST = Manifest.txt
 JAR_FILE = klasma.jar
 
+ANTLR_EXTRACTED_FILE = $(PACKAGING_DIR)/org/antlr/v4/Tool.class
+
 .PHONY: extract_antlr clean
 
 # Main rule: builds the JAR file
-$(JAR_FILE): $(GEN_CLASSES) $(CLASSES) extract_antlr
+$(JAR_FILE): $(GEN_CLASSES) $(CLASSES) $(ANTLR_EXTRACTED_FILE)
 	cd $(PACKAGING_DIR);					\
 	cp ../$(CLASS_DIR)/* . ;				\
 	jar cmf ../$(MANIFEST) ../$(JAR_FILE) *
@@ -48,9 +50,9 @@ $(CLASS_DIR)/%.class: $(SOURCE_DIR)/%.java
 
 # Extracts the contents of antlr's JAR file into the packaging directory so
 # that it can be repackaged in our JAR file.
-extract_antlr: $(ANTLR_JAR_PATH)
+$(ANTLR_EXTRACTED_FILE):
 	cd $(PACKAGING_DIR); \
-		jar xf ../$(ANTLR_JAR_PATH)
+		jar xf ../$(ANTLR_JAR_PATH) org
 
 # Deletes all files created by the build.
 # 'subst' is necessary to escape dollars from the shell. :(
