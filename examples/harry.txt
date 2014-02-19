@@ -2,10 +2,10 @@ TRACK
   bassC melodyC
 
 bassC : CHANNEL SQUARE
-  bass bass bass
+  bass bass bass bass
 
 melodyC : CHANNEL SAWTOOTH
-  melody melody melody
+  melody melody melody melody
 
 -- this is a comment
 bass : BLOCK
