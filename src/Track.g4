@@ -21,7 +21,7 @@ note: NOTENAME OCTAVE? LENGTH? ;
 
 endline : SPACE? NEWLINE ;
 
-ID      : [a-z][a-zA-Z0-9_]+ ;
+ID      : [a-z][a-zA-Z0-9_]* ;
 COLON   : ':' ;
 CHANNEL : 'CHANNEL';
 BLOCK   : 'BLOCK' ;
