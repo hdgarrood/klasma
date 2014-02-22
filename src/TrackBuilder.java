@@ -110,7 +110,7 @@ public class TrackBuilder extends TrackBaseListener {
 
     private List<Channel> getValuesAt(
             Map<String, Channel> map,
-            List<String> keys) throws TrackException {
+            List<String> keys) {
         List<Channel> retval = new ArrayList<>();
 
         Iterator<String> iter = keys.iterator();
