@@ -1,16 +1,40 @@
-TRACK 
-  bassC melodyC
+TRACK
+  bassC m1c m2c drumsC
 
 bassC : CHANNEL SQUARE
   bass bass bass bass
+  bass bass bass bass
 
-melodyC : CHANNEL SAWTOOTH
-  melody melody melody melody
+m1c : CHANNEL SAWTOOTH
+  m1 m1 m1 m1
+  m1 m1 m1 m1
 
--- this is a comment
+m2c : CHANNEL TRIANGLE
+  r r r r
+  m2a m2a m2a m2a
+  m2b m2b
+
+drumsC : CHANNEL NOISE
+  r r r r
+  d1 d1 d1 d1
+
+r : BLOCK
+  ^++++
+
 bass : BLOCK
   D2+++ D2+++
 
-melody : BLOCK
+m1 : BLOCK
   ^ D D D3- D- F- E D F- E
   ^ Bb3 Bb3 ^ C- C C ^- C
+
+m2a : BLOCK
+  D A5 D5 D A5 D5 D A5
+
+m2b : BLOCK
+  E B5 E5 E C#6 F5 E D6
+  G5 C#5 G5 C#6 D5 A5 D6
+
+d1 : BLOCK
+  ^ C- ^. C- ^- C- ^- ^ ^ ^
+  ^ C- ^. C- ^- C- ^- ^ ^ ^
