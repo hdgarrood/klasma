@@ -71,7 +71,7 @@ public class Main {
         try {
             track = TrackBuilder.build(inputStream);
         } catch (TrackException e) {
-            err(e.toString());
+            dieFromTrackException(e);
         }
 
         // Output the track.
@@ -157,5 +157,10 @@ public class Main {
             if (values[i]) total++;
         }
         return total;
+    }
+
+    private static void dieFromTrackException(TrackException e) {
+        System.err.println("klasma: " + e.getMessage());
+        System.exit(1);
     }
 }
