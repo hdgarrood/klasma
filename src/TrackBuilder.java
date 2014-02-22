@@ -47,9 +47,8 @@ public class TrackBuilder extends TrackBaseListener {
     public Track toTrack() {
         Map<String, Block> blocks     = constructBlocks();
         Map<String, Channel> channels = constructChannels(blocks);
-        List<Channel> filteredChannels =
-            getWhereKeyIn(channels, channelsInTrack);
-        return new Track(filteredChannels);
+        List<Channel> channelList = getValuesAt(channels, channelsInTrack);
+        return new Track(channelList);
     }
 
     private Map<String, Block> constructBlocks() {
@@ -109,16 +108,19 @@ public class TrackBuilder extends TrackBaseListener {
         return retval;
     }
 
-    private List<Channel> getWhereKeyIn(
+    private List<Channel> getValuesAt(
             Map<String, Channel> map,
-            List<String> whitelist) {
+            List<String> keys) throws TrackException {
         List<Channel> retval = new ArrayList<>();
 
-        Iterator<String> iter = map.keySet().iterator();
+        Iterator<String> iter = keys.iterator();
         while (iter.hasNext()) {
             String key = iter.next();
-            if (whitelist.contains(key))
+            if (map.containsKey(key))
                 retval.add(map.get(key));
+            else
+                throw new TrackException(String.format(
+                    "Unknown channel '%s' in track declaration", key));
         }
 
         return retval;
