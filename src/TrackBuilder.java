@@ -14,18 +14,11 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 
 // Builds a Track from a string.
 public class TrackBuilder extends TrackBaseListener {
-    // channelsInTrack and channelDecls are List<String> rather than the actual
-    // types they represent because we might not have reached the part of the
-    // tree that contains the channel or block they reference yet; however
-    // blocks do contain all the info necessary to make a Note, so they are
-    // stored as a Map<String, Block>
-    private List<String> channelsInTrack           = new ArrayList<>();
-    private Map<String, List<String>> channelDecls = new HashMap<>();
-    private Map<String, List<Note>> blockDecls     = new HashMap<>();
-    private Map<String, Waveform> channelWaveforms = new HashMap<>();
+    private Map<String, List<Note>> blockDecls = new HashMap<>();
+    private List<Pair<String, List<Note>>> channelDecls = new ArrayList<>();
 
-    private String currentChannel = null;
-    private String currentBlock = null;
+    private String currentWaveformName = null;
+    private String currentBlockName = null;
 
     private TrackBuilder() { super(); }
 
@@ -108,66 +101,39 @@ public class TrackBuilder extends TrackBaseListener {
         return retval;
     }
 
-    private List<Channel> getValuesAt(
-            Map<String, Channel> map,
-            List<String> keys) {
-        List<Channel> retval = new ArrayList<>();
-
-        Iterator<String> iter = keys.iterator();
-        while (iter.hasNext()) {
-            String key = iter.next();
-            if (map.containsKey(key))
-                retval.add(map.get(key));
-            else
-                throw new TrackException(String.format(
-                    "Unknown channel '%s' in track declaration", key));
-        }
-
-        return retval;
-    }
-
-    // Inside the track declaration
-    public void enterChannel_name(TrackParser.Channel_nameContext ctx) {
-        String channelName = ctx.ID().getSymbol().getText();
-        this.channelsInTrack.add(channelName);
-    }
-
+    // When entering a channel declaration:
+    //   * Make a note of its waveform name.
+    //   * Make a new list of blocks for it.
     public void enterChannel_decl(TrackParser.Channel_declContext ctx) {
-        String channelName = ctx.ID().getSymbol().getText();
-        this.currentChannel = channelName;
-
-        if (channelDecls.containsKey(channelName)) {
-            throw new TrackException(String.format(
-                        "Multiple declarations of channel '%s'", channelName));
-        } else {
-            this.channelDecls.put(
-                    this.currentChannel, new ArrayList<String>());
-        }
-
         String waveformName = ctx.WAVE().getSymbol().getText();
-        Waveform waveform = WaveformParser.parse(waveformName);
-        this.channelWaveforms.put(channelName, waveform);
+        this.currentWaveformName = waveformName;
+        this.currentBlockList = new ArrayList<>();
     }
 
+    // When entering a block name, add the block with that name to the end
+    // of the list of blocks for the current channel.
     public void enterBlock_name(TrackParser.Block_nameContext ctx) {
         String blockName = ctx.ID().getSymbol().getText();
-        this.channelDecls.get(this.currentChannel).add(blockName);
+        this.currentBlockList.add(blockName);
     }
 
+    // When exiting a channel declaration:
+    //   * Add the channel to the list of channels
     public void exitChannel_decl(TrackParser.Channel_declContext ctx) {
-        this.currentChannel = null;
+        this.currentWaveformName = null;
+        this.currentBlockList = null;
     }
 
     public void enterBlock_decl(TrackParser.Block_declContext ctx) {
         String blockName = ctx.ID().getSymbol().getText();
-        this.currentBlock = blockName;
+        this.currentBlockName = blockName;
 
         if (blockDecls.containsKey(blockName)) {
             throw new TrackException(String.format(
                         "Multiple declarations of block '%s'", blockName));
         } else {
             this.blockDecls.put(
-                    this.currentBlock, new ArrayList<Note>());
+                    this.currentBlockName, new ArrayList<Note>());
         }
     }
 
@@ -177,7 +143,7 @@ public class TrackBuilder extends TrackBaseListener {
         String length = getLength(ctx);
 
         Note note = makeNote(noteName, octave, length);
-        this.blockDecls.get(this.currentBlock).add(note);
+        this.blockDecls.get(this.currentBlockName).add(note);
     }
 
     private int getOctave(TrackParser.NoteContext ctx) {
@@ -231,6 +197,6 @@ public class TrackBuilder extends TrackBaseListener {
     }
 
     public void exitBlock_decl(TrackParser.Block_declContext ctx) {
-        this.currentBlock = null;
+        this.currentBlockName = null;
     }
 }
