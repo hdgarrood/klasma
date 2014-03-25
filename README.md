@@ -118,4 +118,4 @@ track, it will produce audio data by starting all the declared channels at the
 same time, and playing them concurrently.
 
 There are some example tracks in the examples/ directory; see
-[examples/harry.txt][] to get you started. Enjoy!
+[examples/harry.txt](examples/harry.txt) to get you started. Enjoy!
