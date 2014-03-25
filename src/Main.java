@@ -53,14 +53,14 @@ public class Main {
         if (!extraArgs.isEmpty())
             errExtraArgs(extraArgs);
 
-        if (countTrue(hasFileName, toStdOut, play) != 1)
-            err("must specify exactly one of: " +
-                    "-o OUTPUT-FILE, --stdout, --play.");
-
         if (help) {
             showHelp();
             return;
         }
+
+        if (countTrue(hasFileName, toStdOut, play) != 1)
+            err("must specify exactly one of: " +
+                    "-o OUTPUT-FILE, --stdout, --play.");
 
         // Parse the track.
         InputStream inputStream = inputFileName != null ?
