@@ -1,6 +1,3 @@
-TRACK
-  chan
-
 chan : CHANNEL SAWTOOTH
   b1
 

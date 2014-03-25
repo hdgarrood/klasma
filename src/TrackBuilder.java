@@ -14,12 +14,10 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 
 // Builds a Track from a string.
 public class TrackBuilder extends TrackBaseListener {
-    // channelsInTrack and channelDecls are List<String> rather than the actual
-    // types they represent because we might not have reached the part of the
-    // tree that contains the channel or block they reference yet; however
-    // blocks do contain all the info necessary to make a Note, so they are
-    // stored as a Map<String, Block>
-    private List<String> channelsInTrack           = new ArrayList<>();
+    // The values of channelDecls are List<String> rather than Channel because
+    // we might not have reached the part of the tree that contains the blocks
+    // it references yet; however blocks do contain all the info necessary to
+    // make a Note, so they are stored as a Map<String, Block>
     private Map<String, List<String>> channelDecls = new HashMap<>();
     private Map<String, List<Note>> blockDecls     = new HashMap<>();
     private Map<String, Waveform> channelWaveforms = new HashMap<>();
@@ -47,7 +45,7 @@ public class TrackBuilder extends TrackBaseListener {
     public Track toTrack() {
         Map<String, Block> blocks     = constructBlocks();
         Map<String, Channel> channels = constructChannels(blocks);
-        List<Channel> channelList = getValuesAt(channels, channelsInTrack);
+        List<Channel> channelList     = new ArrayList<>(channels.values());
         return new Track(channelList);
     }
 
@@ -124,12 +122,6 @@ public class TrackBuilder extends TrackBaseListener {
         }
 
         return retval;
-    }
-
-    // Inside the track declaration
-    public void enterChannel_name(TrackParser.Channel_nameContext ctx) {
-        String channelName = ctx.ID().getSymbol().getText();
-        this.channelsInTrack.add(channelName);
     }
 
     public void enterChannel_decl(TrackParser.Channel_declContext ctx) {

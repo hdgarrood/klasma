@@ -1,6 +1,3 @@
-TRACK
-  chanA chanB
-
 chanA : CHANNEL SQUARE
   rests
   m1 m1

@@ -1,11 +1,6 @@
 grammar Track;
 
-track: track_decl decl* ;
-
-track_decl: TRACK track_body ;
-track_body: channel_list_line+ ;
-channel_list_line: endline (SPACE channel_name)+ SPACE? ;
-channel_name: ID ;
+track: decl+ ;
 
 decl: channel_decl | block_decl | endline ;
 

@@ -1,6 +1,3 @@
-TRACK
-  bassC m1c m2c drumsC
-
 bassC : CHANNEL SQUARE
   bass bass bass bass
   bass bass bass bass
