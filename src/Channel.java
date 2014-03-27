@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Channel {
     private Waveform waveform;
+    private Envelope envelope;
     private List<Block> blocks;
 
     public Channel(Waveform waveform, List<Block> blocks) {
@@ -14,13 +15,14 @@ public class Channel {
             throw new IllegalArgumentException("blocks may not be null");
 
         this.waveform = waveform;
+        this.envelope = getEnvelopeFor(waveform);
         this.blocks = blocks;
     }
 
     public List<Block> blocks() {
         return blocks;
     }
-    
+
     public List<Note> notes() {
         List<Note> notes = new ArrayList<Note>();
 
@@ -32,12 +34,21 @@ public class Channel {
 
         return notes;
     }
-    
+
     public Waveform waveform() {
         return waveform;
     }
-    
+
+    public Envelope envelope() {
+        return envelope;
+    }
+
     public ChannelReader getReader(double tempo, double sampleRate) {
         return new ChannelReader(this, tempo, sampleRate);
+    }
+
+    private Envelope getEnvelopeFor(Waveform waveform) {
+        return waveform instanceof Noise ?
+            new AdsrEnvelope() : new NullEnvelope();
     }
 }
