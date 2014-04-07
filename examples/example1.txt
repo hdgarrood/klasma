@@ -1,0 +1,54 @@
+m1 : CHANNEL SQUARE
+    i1
+    d5 d5 d5 d5
+    m1a m2a
+    m1a m2a
+
+m2 : CHANNEL TRIANGLE
+    i2
+    fs5 fs5 fs5 fs5
+    m1b m2b
+    m1b m2b
+
+m3 : CHANNEL SAWTOOTH
+    r r r r
+    r r r r
+    --m3
+
+i1 : BLOCK
+    E++ A++ F++ C5++
+
+i2 : BLOCK
+    ^++ ^++ D++ A++
+
+d5 : BLOCK
+    D5++
+
+fs5 : BLOCK
+    F#5++
+
+r : BLOCK
+    ^++
+
+m1a : BLOCK
+    A B C5 E
+    G+. A+. G+
+    F+ E+
+
+m1b : BLOCK
+    C+ ^+
+    E+ ^+ F+ E+
+    D+ G+
+
+m2a : BLOCK
+    A B C5 E
+    G+. A+.
+    B+ C5++
+
+m2b : BLOCK
+    C+ ^+
+    E+ ^ F+ ^
+    F+ E++
+
+m3 : BLOCK
+    D- C#- D+ A3+ A3 D F# E++
