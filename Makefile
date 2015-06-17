@@ -10,7 +10,7 @@ CLASSPATH      = $(ANTLR_JAR_PATH)
 SOURCES = $(wildcard src/*.java)
 CLASSES = $(patsubst %.java,%.class,$(addprefix $(CLASS_DIR)/,$(notdir $(SOURCES))))
 GEN_SOURCES = $(addprefix $(GEN_SOURCE_DIR)/,TrackBaseListener.java TrackLexer.java TrackLexer.tokens TrackListener.java TrackParser.java Track.tokens)
-GEN_CLASSES = $(addprefix $(CLASS_DIR)/,TrackBaseListener.class TrackLexer.class TrackListener.class TrackParser$$Block_bodyContext.class TrackParser$$Block_declContext.class TrackParser$$Block_list_lineContext.class TrackParser$$Block_nameContext.class TrackParser$$Channel_bodyContext.class TrackParser$$Channel_declContext.class TrackParser$$Channel_list_lineContext.class TrackParser$$Channel_nameContext.class TrackParser.class TrackParser$$DeclContext.class TrackParser$$EndlineContext.class TrackParser$$NoteContext.class TrackParser$$Note_list_lineContext.class TrackParser$$Track_bodyContext.class TrackParser$$TrackContext.class TrackParser$$Track_declContext.class)
+GEN_CLASSES = $(addprefix $(CLASS_DIR)/,TrackBaseListener.class TrackLexer.class TrackListener.class TrackParser$$Block_bodyContext.class TrackParser$$Block_declContext.class TrackParser$$Block_list_lineContext.class TrackParser$$Block_nameContext.class TrackParser$$Channel_bodyContext.class TrackParser$$Channel_declContext.class TrackParser.class TrackParser$$DeclContext.class TrackParser$$EndlineContext.class TrackParser$$NoteContext.class TrackParser$$Note_list_lineContext.class TrackParser$$TrackContext.class)
 
 GRAMMAR = src/Track.g4
 MANIFEST = build/Manifest.txt
